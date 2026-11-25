@@ -11,9 +11,33 @@ const G=[["g1", "Hàng bao kiện đã xếp lên xe"], ["g11", "Hàng thùng đ
 const gs=k=>'assets/img/'+k+'.jpg';
 // header + menu
 const bg=$('#bg'),ov=$('#ov');
-ov.querySelectorAll('a.l').forEach((a,i)=>a.style.transitionDelay=(.15+i*.06)+'s');
-function tg(o){bg.classList.toggle('x',o);ov.classList.toggle('o',o);document.body.style.overflow=o?'hidden':''}
+Object.assign(P,{home:'<path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>'});
+const CUR=(location.pathname.split('/').pop()||'index.html').replace(/^$/,'index.html');
+const RT={'viet-nam-campuchia.html':['VN','KH','Việt Nam','Campuchia','Hàng đi · Phnom Penh'],'campuchia-viet-nam.html':['KH','VN','Campuchia','Việt Nam','Hàng về · 2–3 ngày'],'viet-nam-lao.html':['VN','LA','Việt Nam','Lào','Đường bộ · Viêng Chăn'],'viet-nam-thai-lan.html':['VN','TH','Việt Nam','Thái Lan','Đường bộ · Bangkok']};
+const MI={'index.html':'home','gioi-thieu.html':'info','tuyen-van-chuyen.html':'truck','hinh-anh.html':'img','quy-trinh.html':'list','lien-he.html':'mail'};
+(function(){
+  // dòng chào đầu menu
+  const mh=document.createElement('div');mh.className='mh';mh.textContent='Đúng nơi · Đúng hẹn · Nhanh chóng';ov.insertBefore(mh,ov.firstChild);
+  // dòng menu: icon + chữ + mũi tên, đánh dấu trang hiện tại
+  ov.querySelectorAll('a.l').forEach(a=>{
+    const h=a.getAttribute('href'),t=a.textContent.trim();
+    a.innerHTML='<span class="ico">'+ic(MI[h]||'arrow')+'</span><span class="tx">'+t+'</span>'+(h==='tuyen-van-chuyen.html'?'<span class="badge">4</span>':'')+ic('arrow');
+    if(h===CUR)a.classList.add('on');
+  });
+  // thẻ tuyến: cờ to
+  ov.querySelectorAll('.sub a').forEach(a=>{
+    const r=RT[a.getAttribute('href')];if(!r)return;
+    a.innerHTML='<span class="rf">'+fl(r[0])+ic('arrow')+fl(r[1])+'</span><span class="nm">'+r[2]+' → '+r[3]+'<small>'+r[4]+'</small></span>';
+    if(a.getAttribute('href')===CUR)a.classList.add('on');
+  });
+  // thứ tự xuất hiện lần lượt
+  let i=0;[...ov.children].forEach(el=>{if(!el.classList.contains('mh'))el.style.setProperty('--i',i++)});
+  ov.querySelectorAll('.sub a').forEach((a,j)=>a.style.setProperty('--j',j));
+})();
+function tg(o){bg.classList.toggle('x',o);ov.classList.toggle('o',o);bg.setAttribute('aria-expanded',o);bg.setAttribute('aria-label',o?'Đóng menu':'Mở menu');document.body.style.overflow=o?'hidden':'';if(o)ov.scrollTop=0}
 bg.onclick=()=>tg(!ov.classList.contains('o'));ov.querySelectorAll('a').forEach(a=>a.onclick=()=>tg(false));
+addEventListener('keydown',e=>{if(e.key==='Escape'&&ov.classList.contains('o'))tg(false)});
+addEventListener('resize',()=>{if(innerWidth>1040&&ov.classList.contains('o'))tg(false)});
 addEventListener('scroll',()=>$('#hd').classList.toggle('scr',scrollY>30),{passive:true});
 // reveal + counters
 const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}}),{threshold:.1});$$('.rv').forEach(e=>io.observe(e));
@@ -61,3 +85,33 @@ const pgs=$('.pg');if(pgs&&matchMedia('(hover:hover) and (min-width:1000px)').ma
 if(fab){const tip=document.createElement('div');tip.className='tip';tip.innerHTML='Cần tư vấn nhanh?<b>Chat Zalo ngay →</b>';fab.appendChild(tip);let seen=0;try{seen=sessionStorage.getItem('tip')}catch(e){}
 tip.onclick=()=>open('https://zalo.me/0981491456','_blank');
 if(!seen){setTimeout(()=>{tip.classList.add('show');try{sessionStorage.setItem('tip','1')}catch(e){}},4000);setTimeout(()=>tip.classList.remove('show'),11000)}}
+
+
+// ===== v9: cờ to ở banner tuyến + xe chở hàng cắm cờ =====
+(function(){
+  const flagEl=c=>fl(c);
+  // 1) banner trang con: bọc từng cờ kèm tên nước (hiện trên mobile)
+  const rt=RT[CUR];
+  $$('.pflags').forEach(pf=>{
+    if(!rt)return;
+    [...pf.querySelectorAll(':scope>.fi')].forEach((f,k)=>{
+      const w=document.createElement('span');w.className='pfw';pf.insertBefore(w,f);w.appendChild(f);
+      const n=document.createElement('small');n.textContent=rt[2+k]||'';w.appendChild(n)});
+  });
+  // 2) xe trong banner: thay bằng xe có 2 cờ (cờ nước đi ở đuôi xe, cờ nước đến ở đầu xe)
+  $$('.pg>svg.tk').forEach(old=>{
+    const a=rt?rt[0]:'VN',b=rt?rt[1]:'KH';
+    const w=document.createElement('div');w.className='ptr';
+    w.innerHTML='<span class="pole b"></span><span class="flag b">'+flagEl(a)+'</span><span class="pole f"></span><span class="flag f">'+flagEl(b)+'</span><svg class="tkb" viewBox="0 0 130 54"><use href="#tr"/></svg>';
+    old.replaceWith(w);
+  });
+  // 3) chân trang các trang con: 4 xe, mỗi xe cắm cờ 1 nước (giống trang chủ)
+  $$('footer .frw').forEach(fw=>{
+    if(fw.querySelector('.ftr'))return;
+    const tk=fw.querySelector(':scope>svg.tk');if(tk)tk.remove();fw.classList.add('frx');
+    ['VN','KH','LA','TH'].forEach((c,k)=>{
+      const d=document.createElement('div');d.className='ftr';d.style.setProperty('--dl',(-k*5.5)+'s');
+      d.innerHTML='<span class="fpole"></span><span class="fflag">'+flagEl(c)+'</span><svg class="ftk"><use href="#tr"/></svg>';
+      fw.appendChild(d)});
+  });
+})();
