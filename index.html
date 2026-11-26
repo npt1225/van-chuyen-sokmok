@@ -100,6 +100,112 @@ body>section,.stats{padding-top:84px;padding-bottom:84px}
 /* Luôn dùng giao diện sáng (trắng) trên mọi thiết bị */
 :root:not(#a):not(#b){--bg:#fff;--bg2:#fbf3f3;--tx:#1b1416;--mu:#6b5a5e;--r:#d80f1e;--cd:#fff;--bd:#efdcde;--dk:#1b0a0d;color-scheme:light only}
 html,body{background:#fff}
+</style><style>
+/* ===== Năng lực vận chuyển (bản đồ tuyến) ===== */
+
+#sm-cap{
+  --sm-red:#c8101e; --sm-deep:#7d0811; --sm-ink:#2a0508; --sm-line:rgba(255,255,255,.22);
+  position:relative; overflow:hidden; isolation:isolate; color:#fff;
+  padding:88px 24px 84px;
+  font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background:
+    repeating-linear-gradient(115deg,rgba(255,255,255,.035) 0 90px,transparent 90px 180px),
+    radial-gradient(900px 600px at 78% 45%,rgba(255,110,90,.26),transparent 65%),
+    linear-gradient(165deg,var(--sm-red) 0%,var(--sm-deep) 100%);
+}
+#sm-cap *{box-sizing:border-box}
+#sm-cap .sm-in{max-width:1160px;margin:0 auto}
+
+#sm-cap .sm-grid{
+  display:grid; grid-template-columns:minmax(0,1fr) minmax(0,.92fr);
+  grid-template-areas:"head map" "tabs map"; column-gap:56px; row-gap:28px; align-items:start;
+}
+#sm-cap .sm-head{grid-area:head}
+#sm-cap .sm-tabs{grid-area:tabs}
+#sm-cap .sm-map{grid-area:map}
+
+#sm-cap h2{margin:0 0 14px;font-weight:800;line-height:1.1;font-size:clamp(30px,4.2vw,50px);letter-spacing:-.015em}
+#sm-cap .sm-sub{margin:0;max-width:50ch;font-size:17px;line-height:1.65;color:rgba(255,255,255,.84)}
+
+/* ---------- tabs ---------- */
+#sm-cap .sm-tabs{border-top:1px solid var(--sm-line)}
+#sm-cap .sm-tab{position:relative;border-bottom:1px solid var(--sm-line)}
+#sm-cap .sm-tab-btn{
+  all:unset; box-sizing:border-box; cursor:pointer; width:100%;
+  display:grid; grid-template-columns:14px 1fr 20px; column-gap:16px; align-items:center;
+  padding:20px 0;
+}
+#sm-cap .sm-tab-btn:focus-visible{outline:2px solid #fff;outline-offset:4px;border-radius:6px}
+#sm-cap .sm-sw{width:14px;height:14px;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px rgba(255,255,255,.14);transition:box-shadow .3s}
+#sm-cap .sm-tab.on .sm-sw{box-shadow:0 0 0 4px rgba(255,255,255,.14),0 0 16px 2px var(--c)}
+#sm-cap .sm-tab-t{font-size:19px;font-weight:800;line-height:1.3;opacity:.78;transition:opacity .3s}
+#sm-cap .sm-tab.on .sm-tab-t,#sm-cap .sm-tab-btn:hover .sm-tab-t{opacity:1}
+#sm-cap .sm-tab-t small{display:block;margin-top:3px;font-size:14px;font-weight:400;color:rgba(255,255,255,.8)}
+#sm-cap .sm-chev{width:10px;height:10px;border-right:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(45deg);transition:transform .35s;justify-self:center;margin-top:-4px}
+#sm-cap .sm-tab.on .sm-chev{transform:rotate(225deg);margin-top:4px}
+#sm-cap .sm-tab-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s cubic-bezier(.2,.7,.2,1)}
+#sm-cap .sm-tab.on .sm-tab-body{grid-template-rows:1fr}
+#sm-cap .sm-tab-inner{overflow:hidden;min-height:0}
+#sm-cap .sm-chains{padding:0 0 22px 30px;display:flex;flex-direction:column;gap:14px}
+#sm-cap .sm-chain-label{font-size:13px;color:rgba(255,255,255,.72);margin:0 0 6px}
+#sm-cap .sm-chain{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;align-items:center;row-gap:8px}
+#sm-cap .sm-chain li{display:inline-flex;align-items:center;font-size:15px;font-weight:500}
+#sm-cap .sm-chain li+li::before{content:"";width:18px;height:2px;margin:0 8px;background:var(--c);opacity:.9;border-radius:2px}
+#sm-cap .sm-chain li.gate span{padding:3px 11px;border:1.5px solid var(--c);border-radius:99px;font-weight:600}
+#sm-cap .sm-prog{position:absolute;left:0;bottom:-1px;height:2px;width:0;background:#fff;opacity:0}
+#sm-cap .sm-prog.run{opacity:1;animation:sm-prog var(--dur,6.5s) linear forwards}
+@keyframes sm-prog{to{width:100%}}
+
+/* ---------- map ---------- */
+#sm-cap .sm-map{position:relative;width:100%;max-width:520px;margin:0 auto}
+#sm-cap .sm-map svg{display:block;width:100%;height:auto;overflow:hidden;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 7%,#000 93%,transparent 100%);
+          mask-image:linear-gradient(to bottom,transparent 0,#000 7%,#000 93%,transparent 100%)}
+#sm-cap .ct-line{fill:none;stroke:rgba(255,255,255,.3);stroke-width:1;stroke-linejoin:round}
+#sm-cap .ct-vn .ct-line{stroke:rgba(255,255,255,.7);stroke-width:1.4}
+#sm-cap .ct-name{font:600 12.5px "Be Vietnam Pro",system-ui,sans-serif;letter-spacing:.14em;fill:#fff;opacity:.5;text-anchor:middle}
+
+#sm-cap .rt-base{fill:none;stroke:var(--c);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:.72;transition:opacity .5s,stroke-width .5s}
+#sm-cap .rt-flow{fill:none;stroke:var(--sm-deep);stroke-width:1.5;stroke-linecap:round;stroke-dasharray:5 9;opacity:0;transition:opacity .4s}
+#sm-cap .route.dim .rt-base{opacity:.18}
+#sm-cap .route.on .rt-base{opacity:1;stroke-width:5;filter:drop-shadow(0 0 7px var(--c))}
+#sm-cap .route.on .rt-flow{opacity:.7;animation:sm-flow 1s linear infinite}
+@keyframes sm-flow{to{stroke-dashoffset:-14}}
+
+#sm-cap .nd{opacity:0;transition:opacity .6s,transform .6s}
+#sm-cap .nd.show{opacity:.5}
+#sm-cap .nd.show.on{opacity:1}
+#sm-cap .nd-dot{fill:#fff}
+#sm-cap .nd-ring{fill:var(--sm-deep);stroke:#fff;stroke-width:2.5}
+#sm-cap .nd-pulse{fill:none;stroke:#fff;stroke-width:1.5;opacity:0;transform-box:fill-box;transform-origin:center}
+#sm-cap .nd.on .nd-pulse{animation:sm-pulse 2.2s ease-out infinite}
+@keyframes sm-pulse{0%{opacity:.8;transform:scale(.8)}100%{opacity:0;transform:scale(3)}}
+#sm-cap .nd-lab{font:600 12.5px "Be Vietnam Pro",system-ui,sans-serif;fill:#fff;paint-order:stroke;stroke:var(--sm-deep);stroke-width:3.5;stroke-linejoin:round}
+
+#sm-cap .tk{opacity:0}
+#sm-cap .tk-b{fill:#fff} #sm-cap .tk-c{fill:#ffe1da}
+#sm-cap .tk-w{fill:var(--sm-ink);stroke:#fff;stroke-width:1.2}
+
+/* ---------- stats ---------- */
+#sm-cap .sm-stats{display:grid;grid-template-columns:repeat(4,1fr);list-style:none;margin:56px 0 0;padding:0;border-top:1px solid var(--sm-line)}
+#sm-cap .sm-stat{padding:26px 20px 0 0}
+#sm-cap .sm-stat+.sm-stat{padding-left:26px;border-left:1px solid var(--sm-line)}
+#sm-cap .sm-num{display:flex;align-items:flex-start;gap:2px;font-weight:800;font-size:clamp(36px,4.4vw,58px);line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+#sm-cap .sm-num sup{font-size:.5em;font-weight:600;color:#ffc9c0;margin-top:.05em}
+#sm-cap .sm-label{margin-top:9px;font-size:15px;color:rgba(255,255,255,.86)}
+
+@media (max-width:960px){
+  #sm-cap{padding:60px 18px 56px}
+  #sm-cap .sm-grid{grid-template-columns:1fr;grid-template-areas:"head" "map" "tabs";row-gap:24px}
+  #sm-cap .sm-map{max-width:440px}
+  #sm-cap .sm-stats{grid-template-columns:1fr 1fr;margin-top:40px}
+  #sm-cap .sm-stat:nth-child(3){padding-left:0;border-left:0}
+  #sm-cap .sm-stat:nth-child(n+3){border-top:1px solid var(--sm-line);margin-top:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  #sm-cap .route.on .rt-flow,#sm-cap .nd.on .nd-pulse,#sm-cap .sm-prog.run{animation:none}
+  #sm-cap .sm-tab-body,#sm-cap *{transition:none !important}
+}
 </style></head>
 <body>
 <svg width="0" height="0" style="position:absolute"><symbol id="tr" viewBox="0 0 130 54"><rect x="0" y="33" width="84" height="5" fill="#d80f1e"/><rect x="2.0" y="21" width="20" height="12" rx="1" fill="#d9a066" stroke="#9c6234" stroke-width=".8"/><rect x="10.4" y="21" width="3.2" height="12" fill="#f1d7a8"/><rect x="22.2" y="21" width="20" height="12" rx="1" fill="#d9a066" stroke="#9c6234" stroke-width=".8"/><rect x="30.6" y="21" width="3.2" height="12" fill="#f1d7a8"/><rect x="42.4" y="21" width="20" height="12" rx="1" fill="#d9a066" stroke="#9c6234" stroke-width=".8"/><rect x="50.8" y="21" width="3.2" height="12" fill="#f1d7a8"/><rect x="62.599999999999994" y="21" width="20" height="12" rx="1" fill="#d9a066" stroke="#9c6234" stroke-width=".8"/><rect x="71.0" y="21" width="3.2" height="12" fill="#f1d7a8"/><rect x="8.0" y="9" width="20" height="12" rx="1" fill="#d9a066" stroke="#9c6234" stroke-width=".8"/><rect x="16.4" y="9" width="3.2" height="12" fill="#f1d7a8"/><rect x="28.2" y="9" width="20" height="12" rx="1" fill="#d9a066" stroke="#9c6234" stroke-width=".8"/><rect x="36.6" y="9" width="3.2" height="12" fill="#f1d7a8"/><rect x="48.4" y="9" width="20" height="12" rx="1" fill="#d9a066" stroke="#9c6234" stroke-width=".8"/><rect x="56.8" y="9" width="3.2" height="12" fill="#f1d7a8"/><rect x="24" y="0" width="20" height="9" rx="1" fill="#d9a066" stroke="#9c6234" stroke-width=".8"/><rect x="32.4" y="0" width="3.2" height="9" fill="#f1d7a8"/><rect x="46" y="0" width="20" height="9" rx="1" fill="#d9a066" stroke="#9c6234" stroke-width=".8"/><rect x="54.4" y="0" width="3.2" height="9" fill="#f1d7a8"/><rect x="0" y="16" width="84" height="2.2" fill="#d80f1e"/><rect x="0" y="28" width="84" height="2.2" fill="#d80f1e" opacity=".0"/><path d="M87 14h20l15 14 4 5v5H87z" fill="#d80f1e"/><path d="M92 18h13l10 10H92z" fill="#cfe4ff"/><rect x="0" y="38" width="126" height="5" fill="#2b2b2b"/><g fill="#1c1c1c" stroke="#fff" stroke-width="1.5"><circle cx="16" cy="46" r="7"/><circle cx="32" cy="46" r="7"/><circle cx="98" cy="46" r="7"/><circle cx="114" cy="46" r="7"/></g><g fill="#bbb"><circle cx="16" cy="46" r="2.5"/><circle cx="32" cy="46" r="2.5"/><circle cx="98" cy="46" r="2.5"/><circle cx="114" cy="46" r="2.5"/></g></symbol></svg>
@@ -162,7 +268,42 @@ html,body{background:#fff}
 <div class="xr-act"><a class="xr-go" href="viet-nam-thai-lan.html">Xem chi tiết <i data-ic="arrow"></i></a><a class="xr-zl" href="https://zalo.me/0981491456" target="_blank" rel="noopener"><i data-ic="chat"></i>Zalo tư vấn</a></div>
 </div></div></article></div>
 <div class="mbtn"><a class="btn bo" href="tuyen-van-chuyen.html">Tất cả tuyến vận chuyển <i data-ic="arrow"></i></a></div></div></section>
-<div class="stats"><div class="bgc"><i></i><i></i><i></i></div><div class="w"><div class="hd rv"><small><i data-ic="star"></i>Con số ấn tượng</small><h2>Năng lực vận chuyển của <b>SokMok</b></h2></div><div class="grid g4"><div class="sc rv" style="transition-delay:0.0s"><div class="si2"><i data-ic="check"></i></div><b data-n="300" data-s="+">0</b><span>Khách hàng tin tưởng</span><u></u></div><div class="sc rv" style="transition-delay:0.12s"><div class="si2"><i data-ic="truck"></i></div><b data-n="290" data-s="">0</b><span>Xe tải vận chuyển</span><u></u></div><div class="sc rv" style="transition-delay:0.24s"><div class="si2"><i data-ic="pin"></i></div><b data-n="63" data-s="">0</b><span>Tỉnh thành phủ sóng</span><u></u></div><div class="sc rv" style="transition-delay:0.36s"><div class="si2"><i data-ic="users"></i></div><b data-n="1000" data-s="+">0</b><span>Nhân viên vận chuyển</span><u></u></div></div></div></div>
+<section id="sm-cap" aria-labelledby="sm-cap-t">
+  <div class="sm-in">
+    <div class="sm-grid">
+      <header class="sm-head">
+        <h2 id="sm-cap-t">Năng lực vận chuyển của SOKMOK</h2>
+        <p class="sm-sub">Mạng lưới tuyến Việt Nam – Campuchia – Lào – Thái Lan. Chọn một tuyến để xem hành trình và cửa khẩu hàng đi qua.</p>
+      </header>
+
+      <div class="sm-map" role="img" aria-label="Bản đồ các tuyến vận tải của SOKMOK giữa Việt Nam, Campuchia, Lào và Thái Lan">
+        <svg id="sm-svg" viewBox="0 0 550 700" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="sm-dot-a" width="9" height="9" patternUnits="userSpaceOnUse">
+              <circle cx="2.25" cy="2.25" r="1.5" fill="#fff"/><circle cx="6.75" cy="6.75" r="1.5" fill="#fff"/>
+            </pattern>
+            <pattern id="sm-dot-b" width="9" height="9" patternUnits="userSpaceOnUse">
+              <circle cx="2.25" cy="2.25" r="1.3" fill="#fff" fill-opacity=".38"/><circle cx="6.75" cy="6.75" r="1.3" fill="#fff" fill-opacity=".38"/>
+            </pattern>
+          </defs>
+          <g id="sm-land"></g>
+          <g id="sm-routes"></g>
+          <g id="sm-nodes"></g>
+          <g id="sm-trucks"></g>
+        </svg>
+      </div>
+
+      <div class="sm-tabs" id="sm-tabs"></div>
+    </div>
+
+    <ul class="sm-stats">
+      <li class="sm-stat"><div class="sm-num"><span data-count="300">300</span><sup>+</sup></div><div class="sm-label">Khách hàng tin tưởng</div></li>
+      <li class="sm-stat"><div class="sm-num"><span data-count="290">290</span></div><div class="sm-label">Xe tải vận chuyển</div></li>
+      <li class="sm-stat"><div class="sm-num"><span data-count="4">4</span></div><div class="sm-label">Quốc gia kết nối</div></li>
+      <li class="sm-stat"><div class="sm-num"><span data-count="1000">1000</span><sup>+</sup></div><div class="sm-label">Nhân viên vận chuyển</div></li>
+    </ul>
+  </div>
+</section>
 <section><div class="w"><div class="ab-row"><div class="ab-pic rv rv-l"><div class="m"><img src="assets/img/g11.jpg" alt="Kho hàng SokMok" loading="lazy"></div><div class="s"><img src="assets/img/g3.jpg" alt="Hàng xếp trên xe tải SokMok" loading="lazy"></div><div class="bdg2"><small>ĐÚNG NƠI · ĐÚNG HẸN</small>NHANH CHÓNG</div></div><div class="ab-tx rv rv-r"><span class="eyb"><i data-ic="users"></i>Về SokMok Transport</span><h2>Đối tác vận tải <b>đáng tin cậy</b></h2><p><b>Công ty TNHH TMDV Vận Tải SokMok</b> – vận chuyển hàng hóa Việt Nam, Campuchia, Lào, Thái Lan. Uy tín, chuyên nghiệp, nhanh chóng.</p><ul class="ab-ck"><li><i data-ic="check"></i><span>Nhận hàng tận nơi, giao tận tay người nhận</span></li><li><i data-ic="check"></i><span>Hàng hóa được bảo quản và bảo hiểm cẩn thận</span></li><li><i data-ic="check"></i><span>Đội ngũ tư vấn tận tâm, báo giá rõ ràng</span></li></ul><div class="cta2b"><a class="btn bp" href="gioi-thieu.html">Tìm hiểu về SokMok <i data-ic="arrow"></i></a><a class="btn bo" href="lien-he.html">Liên hệ</a></div></div></div></div></section>
 <section class="alt"><div class="w"><div class="hd rv"><small><i data-ic="shield"></i>Vì sao chọn chúng tôi</small><h2>An tâm trên <b>mọi hành trình</b></h2></div><div class="grid g4"><div class="card rv"><div class="ic"><i data-ic="pin"></i></div><h3>Chủ động kiểm soát</h3><p>Theo dõi hành trình đơn hàng online.</p></div><div class="card rv" style="transition-delay:.1s"><div class="ic"><i data-ic="users"></i></div><h3>Đội ngũ chuyên nghiệp</h3><p>Chuyên viên logistics nhiều năm kinh nghiệm.</p></div><div class="card rv" style="transition-delay:.2s"><div class="ic"><i data-ic="shield"></i></div><h3>Bảo hiểm hàng hóa</h3><p>Hàng được bảo quản và bảo hiểm cẩn thận.</p></div><div class="card rv" style="transition-delay:.3s"><div class="ic"><i data-ic="dollar"></i></div><h3>Giá cạnh tranh</h3><p>Tối ưu chi phí cho khách thường xuyên.</p></div></div></div></section>
 <section><div class="w"><div class="hd rv"><small><i data-ic="list"></i>Quy trình</small><h2><b>6 bước</b> gửi hàng chuyên nghiệp</h2></div><div class="s2g"><div class="s2 rv"><div class="sb"><span class="no">01</span><div class="sv"><i data-ic="phone"></i></div><div class="tx"><h4>Tiếp nhận yêu cầu</h4><p>Gọi hoặc Zalo cho SokMok</p></div></div></div><div class="s2 rv"><div class="sb"><span class="no">02</span><div class="sv"><i data-ic="dollar"></i></div><div class="tx"><h4>Tư vấn &amp; báo giá</h4><p>Báo giá rõ ràng, nhanh chóng</p></div></div></div><div class="s2 rv"><div class="sb"><span class="no">03</span><div class="sv"><i data-ic="box"></i></div><div class="tx"><h4>Chuẩn bị hàng</h4><p>Đóng gói, dán tem, gửi về kho</p></div></div></div><div class="s2 rv"><div class="sb"><span class="no">04</span><div class="sv"><i data-ic="shield"></i></div><div class="tx"><h4>Kiểm hàng</h4><p>Kiểm đếm, xác nhận với khách</p></div></div></div><div class="s2 rv"><div class="sb"><span class="no">05</span><div class="sv"><i data-ic="truck"></i></div><div class="tx"><h4>Vận chuyển</h4><p>Xuất phát đúng lịch trình</p></div></div></div><div class="s2 rv"><div class="sb"><span class="no">06</span><div class="sv"><i data-ic="pin"></i></div><div class="tx"><h4>Giao hàng</h4><p>Giao tận tay, báo kết quả</p></div></div></div></div><div class="mbtn"><a class="btn bo" href="quy-trinh.html">Xem quy trình chi tiết <i data-ic="arrow"></i></a></div></div></section>
@@ -176,6 +317,223 @@ html,body{background:#fff}
 <div class="fb"><span>© 2026 Công ty TNHH TMDV Vận Tải SokMok. Bảo lưu mọi quyền.</span><span>sokmoktransport.com</span></div></div><div class="frw frx"><div class="rd"></div><div class="ftr" style="--dl:-0.0s"><span class="fpole"></span><span class="fflag"><span data-fl="VN"></span></span><svg class="ftk"><use href="#tr"/></svg></div><div class="ftr" style="--dl:-5.5s"><span class="fpole"></span><span class="fflag"><span data-fl="KH"></span></span><svg class="ftk"><use href="#tr"/></svg></div><div class="ftr" style="--dl:-11.0s"><span class="fpole"></span><span class="fflag"><span data-fl="LA"></span></span><svg class="ftk"><use href="#tr"/></svg></div><div class="ftr" style="--dl:-16.5s"><span class="fpole"></span><span class="fflag"><span data-fl="TH"></span></span><svg class="ftk"><use href="#tr"/></svg></div></div></footer>
 <div class="fab"><a class="z" href="https://zalo.me/0981491456" target="_blank" rel="noopener" aria-label="Chat Zalo"><span class="t">Chat ngay</span><span class="ico">Zalo</span></a><a class="c" href="tel:0981491456" aria-label="Gọi ngay"><span class="t">0981 491 456</span><span class="ico"><i data-ic="phone"></i></span></a></div>
 <div class="lb" id="lb"><button class="c" id="lc" aria-label="Đóng">✕</button><button class="p" id="lp" aria-label="Trước">‹</button><img id="li" alt=""><button class="n" id="ln" aria-label="Sau">›</button><div class="lcap" id="lcap"></div><div class="lt" id="lt"></div></div>
+<script>
+(function(){
+  var root=document.getElementById('sm-cap'); if(!root) return;
+  var svg=root.querySelector('#sm-svg'), ns='http://www.w3.org/2000/svg';
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function mk(tag,attrs,parent){var e=document.createElementNS(ns,tag);for(var k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+
+  /* ====== 1. Bản đồ: toạ độ kinh/vĩ độ -> SVG ====== */
+  function X(lon){return (lon-98.2)*46.27;}
+  function Y(lat){return (22.8-lat)*48;}
+  function poly(a){return 'M'+a.map(function(p){return X(p[0]).toFixed(1)+' '+Y(p[1]).toFixed(1)}).join('L')+'Z';}
+  function rev(a){return a.slice().reverse();}
+
+  var VN_KH=[[104.48,10.4],[104.85,10.75],[105.3,10.85],[105.85,11.15],[106.18,11.35],[106.45,11.7],[106.75,11.95],[107,12],[107.45,12.3],[107.55,12.8],[107.45,13.4],[107.55,14],[107.55,14.7]];
+  var VN_LA=[[107.55,14.7],[107.3,15.3],[107.45,15.9],[106.9,16.4],[106.6,16.6],[106.7,17],[106.4,17.2],[105.78,17.7],[105.5,18],[105.15,18.35],[104.7,18.9],[104,19.6],[104.3,20.1],[103.9,20.8],[103.4,21.4],[102.9,21.7],[102.4,22.2],[102.15,22.4]];
+  var CN=[[102.15,22.4],[103,22.5],[103.9,22.5],[104.4,22.8],[105,23.2],[105.6,23.1],[106.1,22.95],[106.7,22.85],[107.3,22],[108,21.55]];
+  var VN_COAST=[[108,21.55],[107.3,20.95],[106.75,20.65],[106.1,20.2],[105.9,19.4],[105.75,18.8],[106.2,18.2],[106.65,17.5],[107.2,16.9],[107.7,16.5],[108.2,16.15],[108.5,15.8],[108.8,15.4],[109.2,14.4],[109.3,13.8],[109.3,13.2],[109.2,12.25],[109.2,11.9],[109,11.5],[108.3,10.9],[107.5,10.55],[107.1,10.35],[106.8,10.4],[106.8,10.25],[106.6,9.9],[106.3,9.6],[106.1,9.3],[105.7,9],[105,8.6],[104.75,8.65],[104.8,9.25],[105.05,9.95],[104.9,10.2],[104.48,10.4]];
+  var LA_KH=[[107.55,14.7],[106.9,14.4],[106,14.35],[105.2,14.35]];
+  var KH_TH=[[105.2,14.35],[104.5,14.4],[103.7,14.4],[102.9,14.2],[102.6,13.7],[102.35,13.5],[102.3,12.9],[102.7,12.2],[102.93,11.65]];
+  var LA_TH=[[105.2,14.35],[105.5,15],[105.6,15.6],[105,16.2],[104.75,16.5],[104.8,17.4],[104.2,17.9],[103.5,18.3],[102.6,17.9],[101.8,17.8],[101.15,17.6],[101.2,18.2],[100.5,18.4],[100.2,19],[100.2,19.9],[100.1,20.35]];
+  var LA_N=[[100.1,20.35],[100.6,20.85],[101.15,21.35],[101.75,21.2],[101.7,21.9],[102.15,22.4]];
+  var MM=[[100.1,20.35],[99.5,20.15],[99,20.05],[98.5,19.7],[97.85,19.4],[97.7,18.5],[97.7,17.5],[98.4,16.4],[98.55,15.3],[98.85,14.3],[99.15,13.2],[99.2,12.2],[98.7,10.9],[98.55,9.95]];
+  var PEN=[[98.4,8.2],[98.4,6.5],[100.1,6.4],[101.2,6.3],[101.5,6.9],[100.4,7.6],[99.9,9],[99.3,10.5],[99.9,11.3],[100,12.6],[100.55,13.4],[101,12.7],[101.7,12.65],[102.3,12.15],[102.93,11.65]];
+
+  var countries=[
+    {k:'th',cls:'ct-oth',fill:'sm-dot-b',pts:LA_TH.concat(MM.slice(1),PEN,rev(KH_TH).slice(1)),name:'Thái Lan',nx:100.2,ny:17.4},
+    {k:'la',cls:'ct-oth',fill:'sm-dot-b',pts:VN_LA.concat(rev(LA_N).slice(1),rev(LA_TH).slice(1),rev(LA_KH).slice(1)),name:'Lào',nx:102.2,ny:19.9},
+    {k:'kh',cls:'ct-oth',fill:'sm-dot-b',pts:VN_KH.concat(LA_KH.slice(1),KH_TH.slice(1),[[103,11.6],[103.5,10.63],[104.3,10.48]]),name:'Campuchia',nx:103.6,ny:12.35},
+    {k:'vn',cls:'ct-vn',fill:'sm-dot-a',pts:VN_KH.concat(VN_LA.slice(1),CN.slice(1),VN_COAST.slice(1)),name:'Việt Nam',nx:108.7,ny:12.6}
+  ];
+  var land=root.querySelector('#sm-land');
+  countries.forEach(function(c){
+    var g=mk('g',{class:c.cls},land), d=poly(c.pts);
+    mk('path',{d:d,fill:'url(#'+c.fill+')'},g);
+    mk('path',{d:d,class:'ct-line'},g);
+  });
+  countries.forEach(function(c){
+    var t=mk('text',{class:'ct-name',x:X(c.nx),y:Y(c.ny)},land); t.textContent=c.name.toUpperCase();
+  });
+
+  /* ====== 2. Điểm dừng: sửa tên / toạ độ / vị trí nhãn tại đây ======
+     t: city = thành phố, gate = cửa khẩu / điểm quá cảnh, via = điểm uốn đường (không hiện)
+     l: [căn lề, dx, dy] của nhãn trên bản đồ                                              */
+  var N={
+    hn:  {n:'Hà Nội',          lo:105.85,la:21.03,t:'city',l:['start',10,4]},
+    th:  {n:'Thanh Hóa',       lo:105.78,la:19.8, t:'via'},
+    vinh:{n:'Vinh',            lo:105.68,la:18.68,t:'city',l:['start',10,4]},
+    ct:  {n:'Cầu Treo',        lo:105.15,la:18.35,t:'gate',l:['middle',2,24]},
+    vte: {n:'Viêng Chăn',      lo:102.6, la:17.97,t:'city',l:['middle',0,-12]},
+    dn:  {n:'Đà Nẵng',         lo:108.2, la:16.07,t:'city',l:['start',10,4]},
+    dh:  {n:'Đông Hà',         lo:107.1, la:16.82,t:'via'},
+    lb:  {n:'Lao Bảo',         lo:106.6, la:16.62,t:'gate',l:['middle',0,-12]},
+    sav: {n:'Savannakhet',     lo:104.75,la:16.55,t:'gate',l:['middle',0,-12]},
+    kk:  {n:'Khon Kaen',       lo:102.83,la:16.43,t:'city',l:['middle',0,22]},
+    kor: {n:'Nakhon Ratchasima',lo:102.1,la:14.98,t:'via'},
+    bkk: {n:'Bangkok',         lo:100.5, la:13.75,t:'city',l:['end',-12,4]},
+    poi: {n:'Poipet',          lo:102.6, la:13.65,t:'gate',l:['middle',0,22]},
+    btb: {n:'Battambang',      lo:103.2, la:13.1, t:'via'},
+    pp:  {n:'Phnom Penh',      lo:104.92,la:11.56,t:'city',l:['end',-12,4]},
+    mb:  {n:'Mộc Bài',         lo:106.18,la:11.35,t:'gate',l:['middle',0,-14]},
+    hcm: {n:'TP. Hồ Chí Minh', lo:106.7, la:10.78,t:'city',l:['start',12,4]}
+  };
+  for(var id in N){N[id].x=X(N[id].lo);N[id].y=Y(N[id].la);}
+
+  /* ====== 3. Các tuyến: sửa / thêm tuyến tại đây ====== */
+  var R=[
+    {name:'Việt Nam – Campuchia', sub:'Cửa khẩu Mộc Bài – Bavet', c:'#ffc94d',
+     paths:[{lab:'',s:['hcm','mb','pp']}]},
+    {name:'Việt Nam – Lào', sub:'Lao Bảo – Đen Sa Vẳn · Cầu Treo – Nậm Phao', c:'#ffffff',
+     paths:[{lab:'Từ Đà Nẵng',s:['dn','dh','lb','sav']},{lab:'Từ Hà Nội',s:['hn','th','vinh','ct','vte']}]},
+    {name:'Việt Nam – Thái Lan, qua Lào', sub:'Lao Bảo · cầu Savannakhet – Mukdahan', c:'#8fe3ff',
+     paths:[{lab:'',s:['dn','dh','lb','sav','kk','kor','bkk']}]},
+    {name:'Việt Nam – Thái Lan, qua Campuchia', sub:'Mộc Bài · Poipet – Aranyaprathet', c:'#9af0c4',
+     paths:[{lab:'',s:['hcm','mb','pp','btb','poi','bkk']}]}
+  ];
+
+  function smooth(ids){
+    var P=ids.map(function(i){return [N[i].x,N[i].y]});
+    var d='M'+P[0][0].toFixed(1)+' '+P[0][1].toFixed(1);
+    for(var i=0;i<P.length-1;i++){
+      var p0=P[i-1]||P[i],p1=P[i],p2=P[i+1],p3=P[i+2]||p2;
+      d+='C'+(p1[0]+(p2[0]-p0[0])/6).toFixed(1)+' '+(p1[1]+(p2[1]-p0[1])/6).toFixed(1)+','+
+              (p2[0]-(p3[0]-p1[0])/6).toFixed(1)+' '+(p2[1]-(p3[1]-p1[1])/6).toFixed(1)+','+
+              p2[0].toFixed(1)+' '+p2[1].toFixed(1);
+    }
+    return d;
+  }
+
+  var gR=root.querySelector('#sm-routes'), gT=root.querySelector('#sm-trucks'), gN=root.querySelector('#sm-nodes');
+  var trucks=[];
+  function makeTruck(){
+    var g=mk('g',{class:'tk'},gT), i=mk('g',{transform:'scale(1.35)'},g);
+    mk('rect',{class:'tk-b',x:-9,y:-5,width:11,height:8,rx:1.5},i);
+    mk('path',{class:'tk-c',d:'M3 -3h4l3 3v3H3z'},i);
+    mk('circle',{class:'tk-w',cx:-5,cy:4,r:2},i);
+    mk('circle',{class:'tk-w',cx:6.5,cy:4,r:2},i);
+    return g;
+  }
+
+  R.forEach(function(r,ri){
+    r.nodes={};
+    r.g=mk('g',{class:'route',style:'--c:'+r.c},gR);
+    r.paths.forEach(function(p,pi){
+      p.s.forEach(function(id){r.nodes[id]=1;});
+      var d=smooth(p.s);
+      p.base=mk('path',{class:'rt-base',d:d},r.g);
+      p.flow=mk('path',{class:'rt-flow',d:d},r.g);
+      p.len=p.base.getTotalLength();
+      p.base.style.strokeDasharray=p.len; p.base.style.strokeDashoffset=p.len;
+      [0,1].forEach(function(k){
+        trucks.push({g:makeTruck(),path:p.base,len:p.len,r:r,rev:!!k,ph:(ri*.23+pi*.31+k*.5)%1});
+      });
+    });
+  });
+
+  var nodeEls={};
+  Object.keys(N).forEach(function(id){
+    var n=N[id]; if(n.t==='via') return;
+    var g=mk('g',{class:'nd'},gN); nodeEls[id]=g;
+    if(n.t==='gate'){
+      mk('circle',{class:'nd-pulse',cx:n.x,cy:n.y,r:7},g);
+      mk('circle',{class:'nd-ring',cx:n.x,cy:n.y,r:6.5},g);
+      mk('circle',{cx:n.x,cy:n.y,r:2.2,fill:'#ffd9d2'},g);
+    }else{
+      mk('circle',{class:'nd-dot',cx:n.x,cy:n.y,r:4.2},g);
+    }
+    var t=mk('text',{class:'nd-lab',x:n.x+n.l[1],y:n.y+n.l[2],'text-anchor':n.l[0]},g); t.textContent=n.n;
+  });
+
+  /* ====== 4. Danh sách tuyến bên trái ====== */
+  var tabsEl=root.querySelector('#sm-tabs');
+  R.forEach(function(r,i){
+    var el=document.createElement('div'); el.className='sm-tab'; el.style.setProperty('--c',r.c);
+    var chains=r.paths.map(function(p){
+      return '<div>'+(p.lab?'<p class="sm-chain-label">'+p.lab+'</p>':'')+
+        '<ol class="sm-chain">'+p.s.filter(function(id){return N[id].t!=='via'}).map(function(id){
+          return '<li class="'+(N[id].t==='gate'?'gate':'')+'"><span>'+N[id].n+'</span></li>';
+        }).join('')+'</ol></div>';
+    }).join('');
+    el.innerHTML=
+      '<button class="sm-tab-btn" type="button" aria-expanded="false" aria-controls="sm-body-'+i+'">'+
+        '<span class="sm-sw"></span><span class="sm-tab-t">'+r.name+'<small>'+r.sub+'</small></span><span class="sm-chev"></span>'+
+      '</button>'+
+      '<div class="sm-tab-body" id="sm-body-'+i+'"><div class="sm-tab-inner"><div class="sm-chains">'+chains+'</div></div></div>'+
+      '<i class="sm-prog"></i>';
+    tabsEl.appendChild(el); r.tab=el; r.prog=el.querySelector('.sm-prog');
+    el.querySelector('button').addEventListener('click',function(){auto=false;clearTimeout(timer);setActive(i);});
+  });
+
+  /* ====== 5. Kích hoạt tuyến ====== */
+  var active=-1, auto=!reduce, timer=null, DUR=6500, started=false;
+  function setActive(i){
+    active=i;
+    R.forEach(function(r,k){
+      r.g.classList.toggle('on',k===i); r.g.classList.toggle('dim',k!==i);
+      r.tab.classList.toggle('on',k===i);
+      r.tab.querySelector('button').setAttribute('aria-expanded',k===i);
+      r.prog.classList.remove('run');
+    });
+    Object.keys(nodeEls).forEach(function(id){nodeEls[id].classList.toggle('on',!!R[i].nodes[id]);});
+    if(auto){
+      var pr=R[i].prog; pr.style.setProperty('--dur',DUR+'ms'); void pr.offsetWidth; pr.classList.add('run');
+      clearTimeout(timer); timer=setTimeout(function(){setActive((i+1)%R.length)},DUR);
+    }
+  }
+
+  /* ====== 6. Mở màn: vẽ tuyến, hiện điểm dừng, chạy xe ====== */
+  function intro(){
+    if(started) return; started=true;
+    var delay=0;
+    R.forEach(function(r,ri){
+      r.paths.forEach(function(p){
+        p.base.style.transition=reduce?'none':'stroke-dashoffset 1.5s cubic-bezier(.4,.1,.2,1) '+(ri*.35)+'s, opacity .5s, stroke-width .5s';
+        p.base.style.strokeDashoffset=0;
+      });
+    });
+    Object.keys(nodeEls).forEach(function(id,i){
+      setTimeout(function(){nodeEls[id].classList.add('show');},reduce?0:300+i*110);
+    });
+    setTimeout(function(){
+      R.forEach(function(r){r.paths.forEach(function(p){p.base.style.strokeDasharray='none';});});
+      setActive(0); running=true;
+    },reduce?0:2900);
+  }
+
+  var running=false, t0=performance.now(), SPEED=55;
+  function loop(now){
+    if(running && !reduce){
+      for(var i=0;i<trucks.length;i++){
+        var k=trucks[i], s=((now-t0)/1000*SPEED/k.len+k.ph)%1; if(k.rev) s=1-s;
+        var L=k.len, a=Math.max(0,s*L-3), b=Math.min(L,s*L+3);
+        var pa=k.path.getPointAtLength(a), pb=k.path.getPointAtLength(b), pt=k.path.getPointAtLength(s*L);
+        var flip=((pb.x-pa.x)*(k.rev?-1:1))<0?-1:1;
+        k.g.setAttribute('transform','translate('+pt.x.toFixed(1)+','+(pt.y-6).toFixed(1)+') scale('+(k.rev?-flip:flip)+',1)');
+        var edge=Math.min(1,s/.05,(1-s)/.05);
+        k.g.style.opacity=(edge*(R[active]===k.r?1:.22)).toFixed(2);
+      }
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  /* ====== 7. Đếm số ====== */
+  var cs=root.querySelectorAll('[data-count]');
+  function run(el){var end=+el.getAttribute('data-count'),s0=null;(function f(ts){if(s0===null)s0=ts;var k=Math.min((ts-s0)/1500,1);el.textContent=Math.round(end*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f);})(performance.now());}
+
+  if('IntersectionObserver' in window){
+    if(!reduce) cs.forEach(function(e){e.textContent='0'});
+    var io1=new IntersectionObserver(function(en){if(en[0].isIntersecting){intro();io1.disconnect();}},{threshold:.2});
+    io1.observe(root.querySelector('.sm-map'));
+    if(!reduce){
+      var io2=new IntersectionObserver(function(en){if(en[0].isIntersecting){cs.forEach(run);io2.disconnect();}},{threshold:.4});
+      io2.observe(root.querySelector('.sm-stats'));
+    }
+  }else{intro();}
+})();
+</script>
 <script src="assets/main.js"></script>
 </body>
 </html>

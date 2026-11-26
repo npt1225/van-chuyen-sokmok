@@ -1,4 +1,3 @@
-
 :root{--bg:#fff;--bg2:#fbf3f3;--tx:#1b1416;--mu:#6b5a5e;--r:#d80f1e;--r2:#9d0711;--cd:#fff;--bd:#efdcde;--dk:#1b0a0d;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#140b0d;--bg2:#1c1013;--tx:#f7ecee;--mu:#bfa8ac;--r:#ff3b4a;--cd:#221418;--bd:#3a2227;--dk:#0b0405;color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#140b0d;--bg2:#1c1013;--tx:#f7ecee;--mu:#bfa8ac;--r:#ff3b4a;--cd:#221418;--bd:#3a2227;--dk:#0b0405;color-scheme:dark}
@@ -675,3 +674,61 @@ main{overflow-x:clip}
   .ov .mh{opacity:0;transform:translateY(12px);transition:opacity .3s,transform .3s}
   .ov.o .mh{opacity:1;transform:none;transition:opacity .5s .08s,transform .5s .08s}
 }
+
+/* =====================================================================
+   v10 — PC: HERO TRANG CHỦ MỞ RỘNG 2 BÊN · TIÊU ĐỀ TO, RÕ, THOÁNG
+   Chỉnh --wide (độ rộng tối đa) và --gx-min (lề tối thiểu) ngay dưới đây
+   ===================================================================== */
+@media(min-width:901px){
+  :root{--wide:1640px;--gx-min:clamp(24px,4%,76px)}
+
+  /* Header + hero dùng chung 1 lề → thẳng hàng 2 bên, không còn bó ở giữa */
+  header .w{max-width:none;padding-inline:max(var(--gx-min),calc((100% - var(--wide))/2))}
+  .ph{--gx:max(var(--gx-min),calc((100% - var(--wide))/2));min-height:clamp(660px,90vh,880px)}
+  .ph #hsl{max-width:none;padding-inline:var(--gx)}
+
+  /* Ảnh nền phủ rộng hơn, phần mờ trắng bên trái đủ đậm để chữ đọc rõ */
+  .pph{left:22%;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 14%);mask-image:linear-gradient(90deg,transparent 0,#000 14%)}
+  .pph:after{background:linear-gradient(90deg,var(--bg) 0,color-mix(in srgb,var(--bg) 94%,transparent) 20%,color-mix(in srgb,var(--bg) 55%,transparent) 42%,transparent 70%)}
+
+  /* Khối chữ */
+  .pt{max-width:min(62%,980px);padding:84px 0 168px}
+  .tag2{font-size:15px;padding:9px 20px;margin-bottom:26px}
+
+  /* Tiêu đề: dòng trên vừa, dòng tuyến thật to, không bị ngắt dòng */
+  .ph h1{font-size:clamp(34px,3.3vw,68px);line-height:1.12;letter-spacing:.01em;margin-bottom:34px}
+  .ph h1 em{font-size:1.42em;line-height:1.08;letter-spacing:0;margin-top:12px;white-space:nowrap}
+
+  .pf{gap:14px;margin-bottom:30px}
+  .pf span{font-size:16px;padding:11px 20px;gap:10px}.pf svg{font-size:19px}
+  .pc{margin-bottom:34px}.pc div{font-size:clamp(20px,1.7vw,28px);gap:14px;margin:12px 0}.pc svg{width:42px;height:42px;padding:11px}
+  .ph .cta{gap:16px}.ph .cta .btn{padding:17px 36px;font-size:18px}
+
+  /* Cụm nhãn bên phải bám theo lề mới */
+  .pn{right:var(--gx);font-size:15px;padding:11px 26px}
+  .rc{right:var(--gx);top:104px;font-size:15px;padding:15px 22px;gap:14px}
+  .rc .ln{width:84px}
+  .bd{right:calc(var(--gx) + 24px);width:164px;height:164px;font-size:19px;bottom:190px}
+
+  /* Thanh chọn tuyến bám cùng lề, chữ to hơn */
+  .pb{left:var(--gx);right:var(--gx);bottom:32px;padding:12px;border-radius:26px}
+  .pt2{padding:16px 22px;gap:16px}.pt2 strong{font-size:clamp(15px,1.15vw,19px)}
+}
+@media(min-width:901px) and (max-width:1279px){
+  .ph h1{font-size:clamp(30px,3.6vw,44px)}
+  .pt{max-width:68%}
+}
+@media(min-width:1400px){.pt2 strong{white-space:nowrap}}
+
+/* v10b — MENU PC: chữ to, đậm, rõ hơn */
+@media(min-width:1041px){
+  nav.m>a,nav.m .ddt{font-weight:800;letter-spacing:.005em;color:#16090b}
+  nav.m>a.on,nav.m .ddt.on{color:#fff}
+  nav.m>a:hover,nav.m .ddt:hover,.dd:hover .ddt{color:var(--r)}
+  .ddt svg{width:18px;height:18px;stroke-width:2.6}
+  nav.m .db a{font-size:18px}
+}
+@media(min-width:1041px) and (max-width:1279px){nav.m>a,nav.m .ddt{font-size:15.5px;padding:10px 11px}.nav>.btn{font-size:15px}}
+@media(min-width:1280px) and (max-width:1439px){nav.m>a,nav.m .ddt{font-size:18px;padding:11px 15px}.nav>.btn{font-size:17px;padding:13px 24px}}
+@media(min-width:1440px){nav.m{gap:8px}nav.m>a,nav.m .ddt{font-size:20px;padding:13px 22px}.nav>.btn{font-size:19px;padding:15px 30px}}
+@media(min-width:1800px){nav.m>a,nav.m .ddt{font-size:21px;padding:14px 26px}}
