@@ -11,10 +11,10 @@ const G=[["g1", "Hàng bao kiện đã xếp lên xe"], ["g11", "Hàng thùng đ
 const gs=k=>'assets/img/'+k+'.jpg';
 // header + menu
 const bg=$('#bg'),ov=$('#ov');
-Object.assign(P,{home:'<path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>'});
+Object.assign(P,{news:'<path d="M4 4h13a2 2 0 0 1 2 2v14H6a2 2 0 0 1-2-2V4z"/><path d="M19 8h1a1 1 0 0 1 1 1v9a2 2 0 0 1-2 2"/><path d="M8 8h7M8 12h7M8 16h4"/>',home:'<path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/>',info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>'});
 const CUR=(location.pathname.split('/').pop()||'index.html').replace(/^$/,'index.html');
 const RT={'viet-nam-campuchia.html':['VN','KH','Việt Nam','Campuchia','Hàng đi · Phnom Penh'],'campuchia-viet-nam.html':['KH','VN','Campuchia','Việt Nam','Hàng về · 2–3 ngày'],'viet-nam-lao.html':['VN','LA','Việt Nam','Lào','Đường bộ · Viêng Chăn'],'viet-nam-thai-lan.html':['VN','TH','Việt Nam','Thái Lan','Đường bộ · Bangkok']};
-const MI={'index.html':'home','gioi-thieu.html':'info','tuyen-van-chuyen.html':'truck','hinh-anh.html':'img','quy-trinh.html':'list','lien-he.html':'mail'};
+const MI={'index.html':'home','gioi-thieu.html':'info','tuyen-van-chuyen.html':'truck','hinh-anh.html':'img','quy-trinh.html':'list','lien-he.html':'mail','tin-tuc.html':'news'};
 (function(){
   // dòng chào đầu menu
   const mh=document.createElement('div');mh.className='mh';mh.textContent='Đúng nơi · Đúng hẹn · Nhanh chóng';ov.insertBefore(mh,ov.firstChild);
@@ -22,7 +22,7 @@ const MI={'index.html':'home','gioi-thieu.html':'info','tuyen-van-chuyen.html':'
   ov.querySelectorAll('a.l').forEach(a=>{
     const h=a.getAttribute('href'),t=a.textContent.trim();
     a.innerHTML='<span class="ico">'+ic(MI[h]||'arrow')+'</span><span class="tx">'+t+'</span>'+(h==='tuyen-van-chuyen.html'?'<span class="badge">4</span>':'')+ic('arrow');
-    if(h===CUR)a.classList.add('on');
+    if(h===CUR||(h==='tin-tuc.html'&&document.body.hasAttribute('data-news')))a.classList.add('on');
   });
   // thẻ tuyến: cờ to
   ov.querySelectorAll('.sub a').forEach(a=>{
