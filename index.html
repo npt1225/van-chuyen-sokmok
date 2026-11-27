@@ -158,18 +158,18 @@ html,body{background:#fff}
 @keyframes sm-prog{to{width:100%}}
 
 /* ---------- map ---------- */
-#sm-cap .sm-map{position:relative;width:100%;max-width:520px;margin:0 auto}
+#sm-cap .sm-map{position:relative;width:100%;max-width:600px;margin:0 auto}
 #sm-cap .sm-map svg{display:block;width:100%;height:auto;overflow:hidden;
   -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 7%,#000 93%,transparent 100%);
           mask-image:linear-gradient(to bottom,transparent 0,#000 7%,#000 93%,transparent 100%)}
 #sm-cap .ct-line{fill:none;stroke:rgba(255,255,255,.3);stroke-width:1;stroke-linejoin:round}
 #sm-cap .ct-vn .ct-line{stroke:rgba(255,255,255,.7);stroke-width:1.4}
-#sm-cap .ct-name{font:600 12.5px "Be Vietnam Pro",system-ui,sans-serif;letter-spacing:.14em;fill:#fff;opacity:.5;text-anchor:middle}
+#sm-cap .ct-name{font:600 15.5px "Be Vietnam Pro",system-ui,sans-serif;letter-spacing:.14em;fill:#fff;opacity:.5;text-anchor:middle}
 
-#sm-cap .rt-base{fill:none;stroke:var(--c);stroke-width:3;stroke-linecap:round;stroke-linejoin:round;opacity:.72;transition:opacity .5s,stroke-width .5s}
+#sm-cap .rt-base{fill:none;stroke:var(--c);stroke-width:3.8;stroke-linecap:round;stroke-linejoin:round;opacity:.72;transition:opacity .5s,stroke-width .5s}
 #sm-cap .rt-flow{fill:none;stroke:var(--sm-deep);stroke-width:1.5;stroke-linecap:round;stroke-dasharray:5 9;opacity:0;transition:opacity .4s}
 #sm-cap .route.dim .rt-base{opacity:.18}
-#sm-cap .route.on .rt-base{opacity:1;stroke-width:5;filter:drop-shadow(0 0 7px var(--c))}
+#sm-cap .route.on .rt-base{opacity:1;stroke-width:6.2;filter:drop-shadow(0 0 7px var(--c))}
 #sm-cap .route.on .rt-flow{opacity:.7;animation:sm-flow 1s linear infinite}
 @keyframes sm-flow{to{stroke-dashoffset:-14}}
 
@@ -181,8 +181,14 @@ html,body{background:#fff}
 #sm-cap .nd-pulse{fill:none;stroke:#fff;stroke-width:1.5;opacity:0;transform-box:fill-box;transform-origin:center}
 #sm-cap .nd.on .nd-pulse{animation:sm-pulse 2.2s ease-out infinite}
 @keyframes sm-pulse{0%{opacity:.8;transform:scale(.8)}100%{opacity:0;transform:scale(3)}}
-#sm-cap .nd-lab{font:600 12.5px "Be Vietnam Pro",system-ui,sans-serif;fill:#fff;paint-order:stroke;stroke:var(--sm-deep);stroke-width:3.5;stroke-linejoin:round}
+#sm-cap .nd-lab{font:600 15.5px "Be Vietnam Pro",system-ui,sans-serif;fill:#fff;paint-order:stroke;stroke:var(--sm-deep);stroke-width:4.2;stroke-linejoin:round}
 
+#sm-cap .isl-pt{fill:#fff;stroke:var(--sm-deep);stroke-width:1.2}
+#sm-cap .isl-reef{fill:none;stroke:#fff;stroke-width:1.6}
+#sm-cap .isl-ring{fill:rgba(255,255,255,.08);stroke:rgba(255,255,255,.75);stroke-width:1.4;stroke-dasharray:5 5}
+#sm-cap .isl-lab{font:800 15px "Be Vietnam Pro",system-ui,sans-serif;fill:#fff;text-anchor:middle;paint-order:stroke;stroke:var(--sm-deep);stroke-width:4.2;stroke-linejoin:round}
+#sm-cap .isl-sub{font:600 12.5px "Be Vietnam Pro",system-ui,sans-serif;fill:#ffe1da;text-anchor:middle;paint-order:stroke;stroke:var(--sm-deep);stroke-width:3.4;stroke-linejoin:round}
+#sm-cap .sea-name{font:600 14px "Be Vietnam Pro",system-ui,sans-serif;letter-spacing:.32em;fill:#fff;opacity:.4;text-anchor:middle}
 #sm-cap .tk{opacity:0}
 #sm-cap .tk-b{fill:#fff} #sm-cap .tk-c{fill:#ffe1da}
 #sm-cap .tk-w{fill:var(--sm-ink);stroke:#fff;stroke-width:1.2}
@@ -277,8 +283,8 @@ html,body{background:#fff}
         <p class="sm-sub">Mạng lưới tuyến Việt Nam – Campuchia – Lào – Thái Lan. Chọn một tuyến để xem hành trình và cửa khẩu hàng đi qua.</p>
       </div>
 
-      <div class="sm-map" role="img" aria-label="Bản đồ các tuyến vận tải của SOKMOK giữa Việt Nam, Campuchia, Lào và Thái Lan">
-        <svg id="sm-svg" viewBox="0 0 550 700" xmlns="http://www.w3.org/2000/svg">
+      <div class="sm-map" role="img" aria-label="Bản đồ các tuyến vận tải của SOKMOK giữa Việt Nam (gồm quần đảo Hoàng Sa và Trường Sa), Campuchia, Lào và Thái Lan">
+        <svg id="sm-svg" viewBox="20 0 770 775" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="sm-dot-a" width="9" height="9" patternUnits="userSpaceOnUse">
               <circle cx="2.25" cy="2.25" r="1.5" fill="#fff"/><circle cx="6.75" cy="6.75" r="1.5" fill="#fff"/>
@@ -358,6 +364,29 @@ html,body{background:#fff}
     var t=mk('text',{class:'ct-name',x:X(c.nx),y:Y(c.ny)},land); t.textContent=c.name.toUpperCase();
   });
 
+
+  /* ====== 1b. Quần đảo Hoàng Sa & Trường Sa (Việt Nam) ====== */
+  (function(){
+    var g=mk('g',{class:'ct-vn isl'},land);
+    function ring(lo,la,rx,ry){mk('ellipse',{class:'isl-ring',cx:X(lo),cy:Y(la),rx:rx,ry:ry},g);}
+    function pt(lo,la,r,reef){mk('circle',{class:reef?'isl-reef':'isl-pt',cx:X(lo),cy:Y(la),r:r},g);}
+    function lab(lo,la,t1,t2){
+      var a=mk('text',{class:'isl-lab',x:X(lo),y:Y(la)},g); a.textContent=t1;
+      var b=mk('text',{class:'isl-sub',x:X(lo),y:Y(la)+16},g); b.textContent=t2;
+    }
+    var sea=mk('text',{class:'sea-name',x:X(111.1),y:Y(13.9)},g); sea.textContent='BIỂN ĐÔNG';
+    /* Hoàng Sa */
+    ring(111.9,16.45,46,38);
+    [[111.61,16.53],[111.7,16.45],[111.5,16.45],[111.2,15.78],[112.33,16.83],[112.28,16.98],[112.73,16.67],[111.95,16.35]].forEach(function(c){pt(c[0],c[1],2.8);});
+    [[112.5,16.0],[111.4,16.7]].forEach(function(c){pt(c[0],c[1],3,1);});
+    lab(111.9,17.55,'Quần đảo Hoàng Sa','(Việt Nam)');
+    /* Trường Sa */
+    ring(113.0,9.9,80,108);
+    [[114.33,11.43],[114.33,9.88],[114.37,10.18],[114.48,10.38],[111.92,8.64],[112.92,7.9],[114.25,9.77],[112.2,8.9],[114.0,8.95],[114.17,8.67],[113.3,8.4],[113.0,9.6]].forEach(function(c){pt(c[0],c[1],2.8);});
+    [[111.67,8.7],[112.35,8.87],[113.6,9.2],[113.9,10.4],[112.6,10.1]].forEach(function(c){pt(c[0],c[1],3,1);});
+    lab(113.0,12.7,'Quần đảo Trường Sa','(Việt Nam)');
+  })();
+
   /* ====== 2. Điểm dừng: sửa tên / toạ độ / vị trí nhãn tại đây ======
      t: city = thành phố, gate = cửa khẩu / điểm quá cảnh, via = điểm uốn đường (không hiện)
      l: [căn lề, dx, dy] của nhãn trên bản đồ                                              */
@@ -411,7 +440,7 @@ html,body{background:#fff}
   var gR=root.querySelector('#sm-routes'), gT=root.querySelector('#sm-trucks'), gN=root.querySelector('#sm-nodes');
   var trucks=[];
   function makeTruck(){
-    var g=mk('g',{class:'tk'},gT), i=mk('g',{transform:'scale(1.35)'},g);
+    var g=mk('g',{class:'tk'},gT), i=mk('g',{transform:'scale(1.7)'},g);
     mk('rect',{class:'tk-b',x:-9,y:-5,width:11,height:8,rx:1.5},i);
     mk('path',{class:'tk-c',d:'M3 -3h4l3 3v3H3z'},i);
     mk('circle',{class:'tk-w',cx:-5,cy:4,r:2},i);
