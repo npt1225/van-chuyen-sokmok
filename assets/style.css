@@ -773,3 +773,111 @@ main{overflow-x:clip}
   .cta2 h3{max-width:none;font-size:clamp(24px,2.3vw,32px)}
   .cta2 .ac{margin:0}
 }
+/* =====================================================================
+   v11 — SỬA GIAO DIỆN ĐIỆN THOẠI / MÀN HÌNH NHỎ
+   (đặt cuối file để ghi đè; không ảnh hưởng giao diện máy tính)
+   ===================================================================== */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+h1,h2,h3,h4{overflow-wrap:break-word}
+.nw{white-space:nowrap}
+/* nút / nhãn không bao giờ rớt chữ xuống dòng */
+.btn,.xr-go,.xr-zl,.xr-hot,.xr-tag,.lk,.tag2,.eyb,.hd small,.pf span,.chl span,.xr-chips li,.xr-stat span,.pt2 strong,.rfl,.rc b,.so a,.so2 a{white-space:nowrap}
+/* grid/flex con không bị nội dung dài đẩy tràn khung */
+.ctg>*,.ab-info>*,.ab-row>*,.ab-mm>*,.tm>*,.rrow>*,.ct>*,.rg>*,.pl>*{min-width:0}
+.ci3>div,.ca>div,.fl>*:not(svg):not(.fi){min-width:0;overflow-wrap:anywhere}
+.ci3 a,.ca strong,.fl a{overflow-wrap:anywhere}
+
+@media(max-width:1040px){
+  .ctg{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:900px){
+  .ab-row,.ab-info,.ab-mm{grid-template-columns:minmax(0,1fr)}
+
+  /* --- Hero trang chủ --- */
+  .ph .cta{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+  .ph .cta .btn{width:100%;justify-content:center;padding:15px 20px}
+  .ph h1 em{text-wrap:balance}
+  .rc{white-space:nowrap;font-size:12px;padding:9px 12px;gap:8px;max-width:calc(100% - 24px)}
+  .rc b{display:inline-flex;align-items:center;gap:4px}
+  .rc .fi{width:20px;height:14px;margin:0}
+  .rc .ln{width:30px;flex:none}
+  .bd{text-wrap:balance;word-break:keep-all;display:grid;place-items:center}
+}
+
+@media(max-width:700px){
+  /* --- Cụm nút CTA xếp dọc, cùng chiều rộng --- */
+  .cta2b,.cta2 .ac,.cta{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;width:100%}
+  .cta2b .btn,.cta2 .ac .btn,.cta .btn{width:100%;justify-content:center;padding:15px 20px}
+  .cta2 .ac{width:100%}
+
+  /* --- Thẻ tuyến ở trang chủ: 2 nút luôn 1 hàng, không rớt chữ --- */
+  .xr-card .xr-in{padding-top:108px}
+  .xr-card .xr-act{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+  .xr-card .xr-go,.xr-card .xr-zl{white-space:nowrap;justify-content:center;gap:6px;padding:14px 8px;font-size:14px;min-width:0}
+  .xr-card .xr-go svg,.xr-card .xr-zl svg{width:16px;height:16px;flex:none}
+  .xr-card:hover .xr-go{gap:6px;padding-right:8px}
+  .xr-body h3{text-wrap:balance}
+  .xr-stat{gap:8px}.xr-stat span{font-size:13px;padding:8px 14px}
+
+  /* --- Thẻ tuyến ở trang con (Các tuyến khác) --- */
+  .rcg .rcard{padding-top:112px}
+  .rcg .rcard:before{font-size:64px;right:16px;top:14px}
+  .rcg .rbd h3{text-wrap:balance}
+  .rcg .lk{white-space:nowrap}
+
+  /* --- 6 bước ở trang chủ / trang tuyến: số mờ không đè chữ --- */
+  .sb .no{font-size:40px;right:10px;opacity:.55}
+  .sb .tx{padding-right:46px}
+
+  /* --- Quy trình: số mờ cuối thẻ không đè danh sách --- */
+  .pr-c,.pr-s:nth-of-type(even) .pr-c{padding-bottom:50px}
+  .pr-gh{font-size:56px;bottom:-4px;right:14px;opacity:.6}
+
+  /* --- Dòng tuyến (TP.HCM ——🚚—— Phnom Penh) --- */
+  .rln{gap:8px}
+  .rln span{font-size:14px;padding:6px 10px;white-space:nowrap}
+  .rln .ln{flex:1 1 40px;min-width:40px;max-width:none}
+
+  /* --- Liên hệ / giới thiệu: thẻ không tràn ngang --- */
+  .cc,.ck,.ab-box{max-width:100%}
+  .ci3{font-size:15.5px;gap:12px}
+  .cio2{width:48px;height:48px;font-size:22px;border-radius:14px}
+  .ca strong{font-size:clamp(18px,5.4vw,22px)}
+  .ca small{font-size:13px}
+  .ab-box .ci3{font-size:15.5px}
+
+  /* --- Tiêu đề trong banner trang con --- */
+  .pg h1{font-size:clamp(34px,10.4vw,46px)}
+  .pg p{font-size:16px}
+
+  /* --- Footer --- */
+  .fl{font-size:15.5px}
+  .fg li a{white-space:normal}
+}
+
+@media(max-width:359px){
+  .xr-card .xr-act{grid-template-columns:minmax(0,1fr)}
+  .xr-body h3{font-size:23px}
+  .rc{font-size:11px;padding:8px 10px}.rc .ln{width:22px}
+  .btn{padding-left:18px;padding-right:18px}
+  .cta2{padding:28px 18px}
+  .ov .sub a{padding:10px}
+}
+@media(max-width:700px){
+  .xr-card .xr-in{padding-top:120px}
+  .xr-card .xr-num{font-size:64px;top:16px;right:16px}
+}
+@media(max-width:700px){
+  .ca{gap:12px;padding:12px}
+  .cio{width:42px;height:42px;font-size:20px}
+  .ca strong{font-size:clamp(16px,4.9vw,20px)}
+  .ca .go{font-size:18px}
+  .ci3 a[href^="mailto"]{font-size:14.5px;letter-spacing:-.01em}
+}
+@media(min-width:360px) and (max-width:700px){
+  .rln{flex-wrap:nowrap;gap:6px}
+  .rln span{font-size:13px;padding:6px 8px}
+  .rln .fi{width:20px;height:14px;margin-right:5px}
+  .rln .ln{flex:1 1 24px;min-width:24px}
+  .rln .ln svg{width:36px}
+}
