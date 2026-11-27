@@ -114,6 +114,7 @@ html,body{background:#fff}
     linear-gradient(165deg,var(--sm-red) 0%,var(--sm-deep) 100%);
 }
 #sm-cap *{box-sizing:border-box}
+#sm-cap .sm-head{position:static;background:none;box-shadow:none;border:0}
 #sm-cap .sm-in{max-width:1160px;margin:0 auto}
 
 #sm-cap .sm-grid{
@@ -271,10 +272,10 @@ html,body{background:#fff}
 <section id="sm-cap" aria-labelledby="sm-cap-t">
   <div class="sm-in">
     <div class="sm-grid">
-      <header class="sm-head">
+      <div class="sm-head">
         <h2 id="sm-cap-t">Năng lực vận chuyển của SOKMOK</h2>
         <p class="sm-sub">Mạng lưới tuyến Việt Nam – Campuchia – Lào – Thái Lan. Chọn một tuyến để xem hành trình và cửa khẩu hàng đi qua.</p>
-      </header>
+      </div>
 
       <div class="sm-map" role="img" aria-label="Bản đồ các tuyến vận tải của SOKMOK giữa Việt Nam, Campuchia, Lào và Thái Lan">
         <svg id="sm-svg" viewBox="0 0 550 700" xmlns="http://www.w3.org/2000/svg">
@@ -361,8 +362,10 @@ html,body{background:#fff}
      t: city = thành phố, gate = cửa khẩu / điểm quá cảnh, via = điểm uốn đường (không hiện)
      l: [căn lề, dx, dy] của nhãn trên bản đồ                                              */
   var N={
-    hn:  {n:'Hà Nội',          lo:105.85,la:21.03,t:'city',l:['start',10,4]},
-    th:  {n:'Thanh Hóa',       lo:105.78,la:19.8, t:'via'},
+    nt:  {n:'Nha Trang',       lo:108.9, la:12.3, t:'via'},
+    qn:  {n:'Quy Nhơn',        lo:108.95,la:13.8, t:'via'},
+    qng: {n:'Quảng Ngãi',      lo:108.5, la:15.2, t:'via'},
+    qb:  {n:'Quảng Bình',      lo:106.1, la:17.7, t:'via'},
     vinh:{n:'Vinh',            lo:105.68,la:18.68,t:'city',l:['start',10,4]},
     ct:  {n:'Cầu Treo',        lo:105.15,la:18.35,t:'gate',l:['middle',2,24]},
     vte: {n:'Viêng Chăn',      lo:102.6, la:17.97,t:'city',l:['middle',0,-12]},
@@ -386,9 +389,9 @@ html,body{background:#fff}
     {name:'Việt Nam – Campuchia', sub:'Cửa khẩu Mộc Bài – Bavet', c:'#ffc94d',
      paths:[{lab:'',s:['hcm','mb','pp']}]},
     {name:'Việt Nam – Lào', sub:'Lao Bảo – Đen Sa Vẳn · Cầu Treo – Nậm Phao', c:'#ffffff',
-     paths:[{lab:'Từ Đà Nẵng',s:['dn','dh','lb','sav']},{lab:'Từ Hà Nội',s:['hn','th','vinh','ct','vte']}]},
+     paths:[{lab:'Qua cửa khẩu Lao Bảo',s:['hcm','nt','qn','qng','dn','dh','lb','sav']},{lab:'Qua cửa khẩu Cầu Treo',s:['hcm','nt','qn','qng','dn','dh','qb','vinh','ct','vte']}]},
     {name:'Việt Nam – Thái Lan, qua Lào', sub:'Lao Bảo · cầu Savannakhet – Mukdahan', c:'#8fe3ff',
-     paths:[{lab:'',s:['dn','dh','lb','sav','kk','kor','bkk']}]},
+     paths:[{lab:'',s:['hcm','nt','qn','qng','dn','dh','lb','sav','kk','kor','bkk']}]},
     {name:'Việt Nam – Thái Lan, qua Campuchia', sub:'Mộc Bài · Poipet – Aranyaprathet', c:'#9af0c4',
      paths:[{lab:'',s:['hcm','mb','pp','btb','poi','bkk']}]}
   ];
